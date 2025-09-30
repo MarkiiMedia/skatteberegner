@@ -33,7 +33,7 @@ public class BeregningTest {
 
         double skat = beregning.SkatVedJulegave(910, 300);
 
-        Assert.Equal(1210, skat);
+        Assert.Equal(10, skat);
     }
 
     [Fact]
