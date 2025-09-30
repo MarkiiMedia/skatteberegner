@@ -10,28 +10,34 @@ public class Beregning
         Console.WriteLine($"Julegave: {julegave} kr.");
         Console.WriteLine($"Andre gaver: {andreGaver} kr.");
 
+        decimal samletGavebeløb = julegave + andreGaver;
+        Console.WriteLine($"Samlet gavebeløb: {samletGavebeløb} kr.");
+
         decimal skattepligtigtBeløb = 0;
 
-        if (julegave <= JulegaveGrænse)
+        if (samletGavebeløb <= SkattefriGrænse)
         {
-            Console.WriteLine("Julegaven er skattefri.");
-            skattepligtigtBeløb = andreGaver;
-            Console.WriteLine($"Skattepligtigt beløb = andre gaver: {skattepligtigtBeløb} kr.");
+            Console.WriteLine("Samlet gavebeløb er inden for skattefri grænse.");
+            skattepligtigtBeløb = 0;
         }
         else
         {
-            Console.WriteLine("Julegaven overstiger skattefri grænse og er skattepligtig.");
-            decimal samletGavebeløb = julegave + andreGaver;
-            Console.WriteLine($"Samlet gavebeløb: {samletGavebeløb} kr.");
+            Console.WriteLine("Samlet gavebeløb overstiger skattefri grænse.");
 
-            if (samletGavebeløb > SkattefriGrænse)
+            if (julegave <= JulegaveGrænse)
             {
+                // Julegaven kan holdes ude af beskatningen
                 skattepligtigtBeløb = samletGavebeløb - SkattefriGrænse;
-                Console.WriteLine($"Skattepligtigt beløb: {skattepligtigtBeløb} kr.");
+                Console.WriteLine($"Skattepligtigt beløb før fradrag for julegave: {skattepligtigtBeløb} kr.");
+
+                skattepligtigtBeløb = Math.Max(skattepligtigtBeløb - julegave, 0);
+                Console.WriteLine($"Skattepligtigt beløb efter fradrag for julegave: {skattepligtigtBeløb} kr.");
             }
             else
             {
-                Console.WriteLine("Samlet gavebeløb er inden for skattefri grænse.");
+                // Julegaven er skattepligtig og tæller med
+                skattepligtigtBeløb = samletGavebeløb - SkattefriGrænse;
+                Console.WriteLine($"Julegaven overstiger grænsen og beskattes. Skattepligtigt beløb: {skattepligtigtBeløb} kr.");
             }
         }
 
@@ -41,15 +47,14 @@ public class Beregning
     }
 }
 
-// Tilføjet Main-metode for konsolkørsel
 public class Program
 {
     public static void Main(string[] args)
     {
         Beregning beregning = new Beregning();
 
-        // Eksempel: julegave = 900 kr., andre gaver = 500 kr.
-        double skat = beregning.SkatVedJulegave(900m, 500m);
+        // Eksempel: julegave = 900 kr., andre gaver = 300 kr.
+        double skat = beregning.SkatVedJulegave(900m, 300m);
         Console.WriteLine($"Skat der skal betales: {skat} kr.");
     }
 }
