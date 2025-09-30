@@ -39,7 +39,7 @@ public class BeregningTest
     {
         Beregning beregning = new Beregning();
         double skat = beregning.SkatVedJulegave(900, 500);
-        Assert.Equal(500, skat); // Julegaven holdes ude, 900 + 500 = 1400 → 1400 - 1200 = 200 → beskattes med 200, men kun fra andre gaver → 500 beskattes
+        Assert.Equal(500, skat); // Julegaven holdes ude, hele 500 beskattes
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class BeregningTest
     {
         Beregning beregning = new Beregning();
         double skat = beregning.SkatVedJulegave(1300, 0);
-        Assert.Equal(100, skat); // 1300 - 1200 = 100 → julegaven er over 1200 og beskattes
+        Assert.Equal(100, skat); // 1300 - 1200 = 100
     }
 
     [Fact]
@@ -55,6 +55,6 @@ public class BeregningTest
     {
         Beregning beregning = new Beregning();
         double skat = beregning.SkatVedJulegave(1000, 300);
-        Assert.Equal(100, skat); // 1000 + 300 = 1300 → 1300 - 1200 = 100 → julegaven > 900 → hele overskud beskattes
+        Assert.Equal(100, skat); // 1000 + 300 = 1300 → 1300 - 1200 = 100
     }
 }

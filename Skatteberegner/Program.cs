@@ -4,6 +4,7 @@ public class Beregning
 {
     private const decimal SkattefriGrænse = 1200m; // Samlet skattefri grænse
     private const decimal JulegaveGrænse = 900m;   // Skattefri grænse for julegaver
+
     public double SkatVedJulegave(decimal julegave, decimal andreGaver)
     {
         Console.WriteLine($"Julegave: {julegave} kr.");
@@ -23,18 +24,17 @@ public class Beregning
         {
             Console.WriteLine("Samlet gavebeløb overstiger skattefri grænse.");
 
-            if (julegave > JulegaveGrænse)
+            if (julegave <= JulegaveGrænse)
+            {
+                // Julegaven kan holdes ude af beskatningen
+                skattepligtigtBeløb = andreGaver;
+                Console.WriteLine("Julegaven er skattefri og holdes ude af beskatningen.");
+            }
+            else
             {
                 // Julegaven er skattepligtig og tæller med
                 skattepligtigtBeløb = samletGavebeløb - SkattefriGrænse;
                 Console.WriteLine("Julegaven overstiger 900 kr. og beskattes.");
-            }
-            else
-            {
-                // Julegaven kan holdes ude af beskatningen
-                decimal overskud = samletGavebeløb - SkattefriGrænse;
-                skattepligtigtBeløb = Math.Min(overskud, andreGaver);
-                Console.WriteLine("Julegaven er skattefri og holdes ude af beskatningen.");
             }
 
             Console.WriteLine($"Skattepligtigt beløb: {skattepligtigtBeløb} kr.");
