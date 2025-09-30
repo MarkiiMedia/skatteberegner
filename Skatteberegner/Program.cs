@@ -1,40 +1,41 @@
-﻿﻿using System;
+﻿using System;
 
 public class Beregning
 {
-    private const decimal SkattefriGrænse = 1200m; // Skattefri grænse for gaver i 2021
-    private const decimal JulegaveGrænse = 900m; // Skattefri grænse for julegaver
-
+    private const decimal SkattefriGrænse = 1200m; // Skattefri grænse for gaver i alt
+    private const decimal JulegaveGrænse = 900m;   // Skattefri grænse for julegaver
     public double SkatVedJulegave(decimal julegave, decimal andreGaver)
     {
-        decimal samletGavebeløb = julegave + andreGaver;
-        Console.WriteLine($"Samlet gavebeløb: {samletGavebeløb}");
+        Console.WriteLine($"Julegave: {julegave} kr.");
+        Console.WriteLine($"Andre gaver: {andreGaver} kr.");
 
-        if (samletGavebeløb <= SkattefriGrænse)
+        decimal skattepligtigtBeløb = 0;
+
+        if (julegave <= JulegaveGrænse)
         {
-
-            Console.WriteLine("Samlet gavebeløb er inden for skattefri grænse.");
-            return 0;
+            Console.WriteLine("Julegaven er skattefri.");
+            skattepligtigtBeløb = andreGaver;
+            Console.WriteLine($"Skattepligtigt beløb = andre gaver: {skattepligtigtBeløb} kr.");
         }
         else
         {
-            decimal skattepligtigtBeløb = samletGavebeløb - SkattefriGrænse;
-            Console.WriteLine($"Skattepligtigt beløb før julegavefradrag: {skattepligtigtBeløb}");
+            Console.WriteLine("Julegaven overstiger skattefri grænse og er skattepligtig.");
+            decimal samletGavebeløb = julegave + andreGaver;
+            Console.WriteLine($"Samlet gavebeløb: {samletGavebeløb} kr.");
 
-            if (julegave <= JulegaveGrænse)
+            if (samletGavebeløb > SkattefriGrænse)
             {
-                skattepligtigtBeløb -= julegave;
-                Console.WriteLine($"Skattepligtigt beløb efter julegavefradrag: {skattepligtigtBeløb}");
+                skattepligtigtBeløb = samletGavebeløb - SkattefriGrænse;
+                Console.WriteLine($"Skattepligtigt beløb: {skattepligtigtBeløb} kr.");
             }
-             double result = (double)Math.Max(skattepligtigtBeløb, 0);
-              Console.WriteLine($"Endeligt skattepligtigt beløb: {result}");
-            return result;
+            else
+            {
+                Console.WriteLine("Samlet gavebeløb er inden for skattefri grænse.");
+            }
         }
-    }
 
-
-    public static void Main(string[] args)
-    {
-        Beregning beregning = new Beregning();
+        double result = (double)Math.Max(skattepligtigtBeløb, 0);
+        Console.WriteLine($"Endeligt skattepligtigt beløb: {result} kr.");
+        return result;
     }
 }

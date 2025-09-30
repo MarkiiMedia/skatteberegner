@@ -45,7 +45,7 @@ public class BeregningTest {
         //Sat til 0 for at passe test, men udregning er forkert.
         // Det rigtige tal burde være 500 da kun gaven skal beskattes.
         //Men det er udregningen i koden i program.cs der er forkert.
-        Assert.Equal(0, skat);
+        Assert.Equal(500, skat);
     }
 
 }
