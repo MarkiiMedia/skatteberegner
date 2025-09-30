@@ -4,6 +4,7 @@ public class Beregning
 {
     private const decimal SkattefriGrænse = 1200m; // Skattefri grænse for gaver i alt
     private const decimal JulegaveGrænse = 900m;   // Skattefri grænse for julegaver
+
     public double SkatVedJulegave(decimal julegave, decimal andreGaver)
     {
         Console.WriteLine($"Julegave: {julegave} kr.");
@@ -37,5 +38,18 @@ public class Beregning
         double result = (double)Math.Max(skattepligtigtBeløb, 0);
         Console.WriteLine($"Endeligt skattepligtigt beløb: {result} kr.");
         return result;
+    }
+}
+
+// Tilføjet Main-metode for konsolkørsel
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Beregning beregning = new Beregning();
+
+        // Eksempel: julegave = 900 kr., andre gaver = 500 kr.
+        double skat = beregning.SkatVedJulegave(900m, 500m);
+        Console.WriteLine($"Skat der skal betales: {skat} kr.");
     }
 }
